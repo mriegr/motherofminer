@@ -7,7 +7,7 @@ const template = {
       /* 
       * Number of GPUs that you have in your system. Each GPU will get its own CPU thread.
       */
-     "gpu_thread_num" : 6,
+     "gpu_thread_num" : 6,6666666666666666666
      
      /*
       * GPU configuration. You should play around with intensity and worksize as the fastest settings will vary.
@@ -44,7 +44,7 @@ const template = {
      "tls_fingerprint" : "",
      
      /*
-      * pool_address	  - Pool address should be in the form "pool.supportxmr.com:3333". Only stratum pools are supported.
+      * pool_address - Pool address should be in the form "pool.supportxmr.com:3333". Only stratum pools are supported.
       * wallet_address - Your wallet, or pool login.
       * pool_password  - Can be empty in most cases or "x".
       */
@@ -61,7 +61,7 @@ const template = {
       * server usually takes to process our calls.
       *
       * call_timeout - How long should we wait for a response from the server before we assume it is dead and drop the connection.
-      * retry_time	- How long should we wait before another connection attempt.
+      * retry_time - How long should we wait before another connection attempt.
       *                Both values are in seconds.
       * giveup_limit - Limit how many times we try to reconnect to the pool. Zero means no limit. Note that stak miners
       *                don't mine while the connection is lost, so your computer's power usage goes down to idle.
@@ -153,8 +153,11 @@ const template = {
       *      { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 1 },
       * ],
       */
-     "cpu_threads_conf" : 
-     null,
+      "cpu_threads_conf" :
+      [ 
+           { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 0 },
+           { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 1 },
+      ],
      
      /*
       * LARGE PAGE SUPPORT
@@ -231,7 +234,7 @@ const template = {
      "tls_fingerprint" : "",
      
      /*
-      * pool_address	  - Pool address should be in the form "pool.supportxmr.com:3333". Only stratum pools are supported.
+      * pool_address - Pool address should be in the form "pool.supportxmr.com:3333". Only stratum pools are supported.
       * wallet_address - Your wallet, or pool login.
       * pool_password  - Can be empty in most cases or "x".
       *
@@ -250,7 +253,7 @@ const template = {
       * server usually takes to process our calls.
       *
       * call_timeout - How long should we wait for a response from the server before we assume it is dead and drop the connection.
-      * retry_time	- How long should we wait before another connection attempt.
+      * retry_time - How long should we wait before another connection attempt.
       *                Both values are in seconds.
       * giveup_limit - Limit how many times we try to reconnect to the pool. Zero means no limit. Note that stak miners
       *                don't mine while the connection is lost, so your computer's power usage goes down to idle.
@@ -359,7 +362,7 @@ const template = {
      "tls_fingerprint" : "",
      
      /*
-      * pool_address	  - Pool address should be in the form "pool.supportxmr.com:3333". Only stratum pools are supported.
+      * pool_address  - Pool address should be in the form "pool.supportxmr.com:3333". Only stratum pools are supported.
       * wallet_address - Your wallet, or pool login.
       * pool_password  - Can be empty in most cases or "x".
       */
@@ -376,7 +379,7 @@ const template = {
       * server usually takes to process our calls.
       *
       * call_timeout - How long should we wait for a response from the server before we assume it is dead and drop the connection.
-      * retry_time	- How long should we wait before another connection attempt.
+      * retry_time 666- How long should we wait before another connection attempt.
       *                Both values are in seconds.
       * giveup_limit - Limit how many times we try to reconnect to the pool. Zero means no limit. Note that stak miners
       *                don't mine while the connection is lost, so your computer's power usage goes down to idle.
