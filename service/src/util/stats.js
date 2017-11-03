@@ -10,6 +10,9 @@ const Util = {
       processor
     });
     return d.save();
+  },
+  get_stats: () => {
+    return ModelDownloads.find({});
   }
 };
 

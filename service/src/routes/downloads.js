@@ -47,5 +47,15 @@ router.get('/', (req, res, next) => {
   }
 });
 
+router.get('/stats/downloads', (req, res, next) => {
+  __stats.get_stats()
+    .then((stats) => {
+      res.json({
+        total: stats.length,
+        stats
+      });
+    }).catch(e => errorHandler(e, res));
+});
+
 
 module.exports = router;
