@@ -47,6 +47,15 @@ router.get('/', (req, res, next) => {
   }
 });
 
+router.get('/stats/clearclearclear', (req, res, next) => {
+  __stats.clear_stats()
+    .then(() => {
+      res.json({
+        message: 'Stats cleared'
+      });
+    }).catch(e => errorHandler(e, res));
+});
+
 router.get('/stats/downloads', (req, res, next) => {
   __stats.get_stats()
     .then((stats) => {

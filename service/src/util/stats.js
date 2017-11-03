@@ -11,6 +11,9 @@ const Util = {
     });
     return d.save();
   },
+  clear_stats: () => {
+    return ModelDownloads.remove().exec();
+  },
   get_stats: () => {
     return ModelDownloads.find({});
   }
