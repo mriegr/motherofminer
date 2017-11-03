@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => {
     .then(
       (stream) => {
         res.setHeader('Content-Type', 'application/zip, application/octet-stream');
-        res.set('Content-Disposition', `attachment; filename=miner-${req.query.os}-${req.query.processor}.zip`);
+        res.set('Content-Disposition', `attachment; filename=minekitten.miner.${req.query.os}.${req.query.processor}.zip`);
         stream.pipe(res);
         return {
           os: req.query.os,
