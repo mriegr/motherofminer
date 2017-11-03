@@ -6,7 +6,7 @@ const __stats = require('../util/stats');
 const router = express.Router();
 
 const errorHandler = (e, res) => {
-  console.log('CATCHED', e.message);
+  console.log('Error: ', e.message);
   res.status(500).json({
     errorMessage: e.message
   });
