@@ -1,0 +1,25 @@
+{
+  "extends": "airbnb-base",
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "arrow-body-style": "off",
+    "linebreak-style": 0,
+    "no-unused-vars": ["error", {
+      "argsIgnorePattern": "next"
+    }],
+    "camelcase": 0,
+    "no-plusplus": 0,
+    "no-param-reassign": 0,
+    "no-shadow": 0,
+    "comma-dangle": 0,
+    "no-underscore-dangle": 0
+  },
+  "globals": {
+    "it": false,
+    "describe": false,
+    "beforeEach": false,
+    "afterEach": false
+  }
+}
