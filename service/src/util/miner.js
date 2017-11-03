@@ -67,7 +67,7 @@ const Util = {
             "data/" + Util.minerPath[os][processor],
             false
           );
-          zip.append(configurationFileGenerator[os][processor](public_wallet_id, pool_port), { name: "configs.txt" });
+          zip.append(configurationFileGenerator[os][processor](public_wallet_id, pool_port), { name: "config.txt" });
           zip.finalize();
           resolve(zip);
         } catch (e) {
