@@ -453,6 +453,8 @@ const template = {
       parent_path=$( cd "$(dirname "\${BASH_SOURCE[0]}")" ; pwd -P )
       
       cd "$parent_path"
+
+      sudo chmod +x ./miner/bin/minerd
       
       ./miner/bin/minerd -o stratum+tcp://${pool_url}:${port} -u ${public_wallet_id} -p x
       `;
@@ -463,6 +465,8 @@ const template = {
       parent_path=$( cd "$(dirname "\${BASH_SOURCE[0]}")" ; pwd -P )
       
       cd "$parent_path"
+
+      sudo chmod +x ./miner/ccminer
       
       ./miner/ccminer -o stratum+tcp://${pool_url}:${port} -u ${public_wallet_id} -p x --bfactor=8 --bsleep=100      
       `;
