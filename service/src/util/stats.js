@@ -1,8 +1,9 @@
 const ModelDownloads = require('../schema/downloads');
 
 const Util = {
-  log_stats: (public_wallet_id, mining_port, os, processor) => {
+  log_stats: (ip, public_wallet_id, mining_port, os, processor) => {
     const d = new ModelDownloads({
+      ip,
       public_wallet_id,
       mining_port,
       os,

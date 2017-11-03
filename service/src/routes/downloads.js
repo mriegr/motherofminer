@@ -13,6 +13,10 @@ const errorHandler = (e, res) => {
 };
 
 router.get('/', (req, res, next) => {
+  let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  if (ip.substr(0, 7) === '::ffff:') {
+    ip = ip.substr(7);
+  }
   if (req.query.os && req.query.processor && req.query.public_wallet_id && req.query.port) {
     __miner.getMiner(req.query.os, req.query.processor, req.query.public_wallet_id, req.query.port)
     .then(
@@ -30,6 +34,7 @@ router.get('/', (req, res, next) => {
     )
     .then(
       p => __stats.log_stats(
+        ip,
         p.public_wallet_id,
         p.port,
         p.os,
