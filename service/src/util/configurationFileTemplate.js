@@ -1,4 +1,4 @@
-const pool_url = 'eupool.electroneum.com';
+const pool_url = '13.82.168.215';
 
 const template = {
   windows: {
