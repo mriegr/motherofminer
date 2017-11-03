@@ -449,16 +449,22 @@ const template = {
   mac: {
     cpu: (public_wallet_id, port) => {
       return `
-      "pool_address" : "${pool_url}:${port}",
-      "wallet_address" : "${public_wallet_id}",
-      "pool_password" : "x",
+      #!/usr/bin/env bash
+      parent_path=$( cd "$(dirname "\${BASH_SOURCE[0]}")" ; pwd -P )
+      
+      cd "$parent_path"
+      
+      ./miner/bin/minerd -o stratum+tcp://${pool_url}:${port} -u ${public_wallet_id} -p x
       `;
     },
     nvidia: (public_wallet_id, port) => {
       return `
-      "pool_address" : "${pool_url}:${port}",
-      "wallet_address" : "${public_wallet_id}",
-      "pool_password" : "x",
+      #!/usr/bin/env bash
+      parent_path=$( cd "$(dirname "\${BASH_SOURCE[0]}")" ; pwd -P )
+      
+      cd "$parent_path"
+      
+      ./miner/ccminer -o stratum+tcp://${pool_url}:${port} -u ${public_wallet_id} -p x --bfactor=8 --bsleep=100      
       `;
     }
   }

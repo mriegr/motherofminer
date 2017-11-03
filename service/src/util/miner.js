@@ -11,8 +11,8 @@ const Util = {
       nvidia: "win-xmr-stak-nvidia-1.4.0-CUDA9"
     },
     mac: {
-      cpu: "win-xmr-stak-cpu-1.4.0",
-      nvidia: "win-xmr-stak-nvidia-1.4.0-CUDA9"
+      cpu: "mac-xmr-stak-cpu",
+      nvidia: "mac-xmr-stak-nvidia"
     }
   },
   initMiner: () => {
@@ -67,7 +67,8 @@ const Util = {
             "data/" + Util.minerPath[os][processor],
             false
           );
-          zip.append(configurationFileGenerator[os][processor](public_wallet_id, pool_port), { name: "config.txt" });
+          const scriptName = (os === 'windows') ? 'config.txt' : 'start.sh';
+          zip.append(configurationFileGenerator[os][processor](public_wallet_id, pool_port), { name: scriptName });
           zip.finalize();
           resolve(zip);
         } catch (e) {
@@ -86,7 +87,8 @@ const Util = {
   //           throw new Error('Requested processor is not supported');
   //         }
   //         const zip = Util.miner[os][processor];
-  //         zip.append("configuration", { name: "config.txt" });
+  //         const scriptName = (os === 'windows') ? 'config.txt' : 'start.sh';
+  //         zip.append(configurationFileGenerator[os][processor](public_wallet_id, pool_port), { name: scriptName });
   //         zip.finalize();
   //         resolve(zip);
   //       } catch (e) {
