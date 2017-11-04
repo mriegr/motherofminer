@@ -15,8 +15,8 @@ services:
 
   mongodb:
     build: ./db/
-    ports:
-      - '27017:27017'
+    expose:
+      - '27017'
     volumes:
       - mongodata:/data/db
 
