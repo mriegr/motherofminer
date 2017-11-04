@@ -1,5 +1,14 @@
 const pool_url = 'etnpool.minekitten.io';
 
+const win_xmr_cpu_thread_configuration = (core_number) => {
+  core_number *= 2;
+  let config = '';
+  for (let i = 0; i < core_number; i += 2) {
+    config += `{ "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : ${i} },`;
+  }
+  return config;
+};
+
 const template = {
   windows: {
     amd: (public_wallet_id, port) => {
@@ -7,7 +16,7 @@ const template = {
       /* 
       * Number of GPUs that you have in your system. Each GPU will get its own CPU thread.
       */
-     "gpu_thread_num" : 6,6666666666666666666
+     "gpu_thread_num" : 6,
      
      /*
       * GPU configuration. You should play around with intensity and worksize as the fastest settings will vary.
@@ -127,7 +136,10 @@ const template = {
      
       `;
     },
-    cpu: (public_wallet_id, port) => {
+    cpu: (public_wallet_id, port, options) => {
+      if (!options.hasOwnProperty('cpu_core_count') || typeof options.cpu_core_count !== 'number') {
+        throw new Error('Required parameter \'cpu_core_count\' is missing or not a valid number');
+      }
       return `
       /*
       * Thread configuration for each thread. Make sure it matches the number above.
@@ -155,8 +167,7 @@ const template = {
       */
       "cpu_threads_conf" :
       [ 
-           { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 0 },
-           { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 1 },
+           ${win_xmr_cpu_thread_configuration(options.cpu_core_count)}
       ],
      
      /*
@@ -319,7 +330,10 @@ const template = {
      
       `;
     },
-    nvidia: (public_wallet_id, port) => {
+    nvidia: (public_wallet_id, port, options) => {
+      if (!options.hasOwnProperty('ram_size_in_gb') || typeof options.ram_size_in_gb !== 'number') {
+        throw new Error('Required parameter \'ram_size_in_gb\' is missing or not a valid number');
+      }
       return `
       /*
       * GPU configuration. You should play around with threads and blocks as the fastest settings will vary.
@@ -341,13 +355,13 @@ const template = {
       *     { "index" : 0, "threads" : 17, "blocks" : 60, "bfactor" : 0, "bsleep" :  0, "affine_to_cpu" : false},
       * ],
       */
-     "gpu_threads_conf" : [
-       { "index" : 0,
-         "threads" : 64, "blocks" : 15,
-         "bfactor" : 6, "bsleep" :  25,
-         "affine_to_cpu" : false,
-       },
-     ],
+      "gpu_threads_conf" : [
+        { "index" : 0,
+          "threads" : ${options.ram_size_in_gb * 6}, "blocks" : ${options.ram_size_in_gb * 28},
+          "bfactor" : 6, "bsleep" :  25,
+          "affine_to_cpu" : false,
+        },
+      ],
      /*
       * TLS Settings
       * If you need real security, make sure tls_secure_algo is enabled (otherwise MITM attack can downgrade encryption
@@ -459,7 +473,10 @@ const template = {
       ./miner/bin/minerd -o stratum+tcp://${pool_url}:${port} -u ${public_wallet_id} -p x
       `;
     },
-    nvidia: (public_wallet_id, port) => {
+    nvidia: (public_wallet_id, port, options) => {
+      if (!options.hasOwnProperty('ram_size_in_gb') || typeof options.ram_size_in_gb !== 'number') {
+        throw new Error('Required parameter \'ram_size_in_gb\' is missing or not a valid number');
+      }
       return `
       #!/usr/bin/env bash
       parent_path=$( cd "$(dirname "\${BASH_SOURCE[0]}")" ; pwd -P )
@@ -468,7 +485,7 @@ const template = {
 
       sudo chmod +x ./miner/ccminer
       
-      ./miner/ccminer -o stratum+tcp://${pool_url}:${port} -u ${public_wallet_id} -p x --bfactor=8 --bsleep=100      
+      ./miner/ccminer -o stratum+tcp://${pool_url}:${port} -u ${public_wallet_id} -p x --launch=${options.ram_size_in_gb * 6}x${options.ram_size_in_gb * 28}, --bfactor=8 --bsleep=100      
       `;
     }
   }

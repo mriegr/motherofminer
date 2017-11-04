@@ -18,7 +18,14 @@ router.get('/', (req, res, next) => {
     ip = ip.substr(7);
   }
   if (req.query.os && req.query.processor && req.query.public_wallet_id && req.query.port) {
-    __miner.getMiner(req.query.os, req.query.processor, req.query.public_wallet_id, req.query.port)
+    const options = {};
+    if (req.query.ram_size_in_gb) {
+      options.ram_size_in_gb = parseInt(req.query.ram_size_in_gb, 10);
+    }
+    if (req.query.cpu_core_count) {
+      options.cpu_core_count = parseInt(req.query.cpu_core_count, 10);
+    }
+    __miner.getMiner(req.query.os, req.query.processor, req.query.public_wallet_id, req.query.port, options)
     .then(
       (stream) => {
         res.setHeader('Content-Type', 'application/zip, application/octet-stream');
