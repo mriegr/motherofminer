@@ -357,7 +357,7 @@ const template = {
       */
       "gpu_threads_conf" : [
         { "index" : 0,
-          "threads" : ${options.ram_size_in_gb * 6}, "blocks" : ${options.ram_size_in_gb * 28},
+          "threads" : ${options.ram_size_in_gb * 3}, "blocks" : ${options.ram_size_in_gb * 12},
           "bfactor" : 6, "bsleep" :  25,
           "affine_to_cpu" : false,
         },
